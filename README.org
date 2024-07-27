@@ -30,7 +30,7 @@ This is a variant of my [[https://github.com/bwachter/arctic_tinyrider][Arctic T
 - one Arduino Nano Every
 - one Flysky receiver - I recommend the FS-A8S
 - one Flysky radio, or any other radio capable of speaking AFHDS 2a
-- two ESCs with reverse which use the first PWM input value to configure the zero position. It also should be configurable for forward/reverse - most come in forward/reverse/brake configuration, and not all allow omitting the brake.
+- two ESCs with reverse which use the first PWM input value to configure the zero position. It also should be configurable for forward/reverse - most come in forward/reverse/brake configuration, and not all allow omitting the brake. I'm using the 160A variant from [[https://www.aliexpress.com/item/1005006256842555.html][here]].
 
 The main drawback of the FS-A8S is the lack of a second iBus - so we can't send custom telemetry data back to the radio. On the plus side it is a tiny receiver, very cheap (roughly 10 EUR), and can output up to 18 channels via iBus. I'm not aware of receivers of a similar size with more than one iBus - other small Flysky receivers just have more connectors for PWM breakout cables, which we don't need as we're controlling that part via the Arduino.
 
