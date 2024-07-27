@@ -207,7 +207,7 @@ void loop() {
     Serial.print(" ");
     Serial.print(pwm_adjusted);
 
-    // TODO: - implement steering while reversing
+    // TODO:
     //       - optimise steering - we can use reverse here to avoid slowing down
     //         one side.
     if (pwm_adjusted == PWM_STOP) {
@@ -223,6 +223,21 @@ void loop() {
       }
     } else if (pwm_adjusted < PWM_STOP) {
       // reversing
+      if (steer_pwm < 90) {
+        // steer left
+        steer_pwm = map(steer_pwm, 0, 90, 90, 0);
+        if (pwm_adjusted - steer_pwm < 0)
+          pwm_left = pwm_adjusted + steer_pwm;
+        else
+          pwm_right = pwm_adjusted - steer_pwm;
+      } else if (steer_pwm > 90) {
+        // right
+        steer_pwm = steer_pwm - 90;
+        if (pwm_adjusted - steer_pwm < 0)
+          pwm_right = pwm_adjusted + steer_pwm;
+        else
+          pwm_left = pwm_adjusted - steer_pwm;
+      }
     } else {
       // generally going forward
       if (steer_pwm < 90) {
