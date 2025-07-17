@@ -1,38 +1,14 @@
 * NoTankS Arduino firmware                                            :TOC_4:
   - [[#introduction][Introduction]]
-    - [[#working-features][Working features]]
-    - [[#planned-features][Planned features]]
-    - [[#required-hardware][Required hardware]]
   - [[#modified-parts][Modified parts]]
     - [[#track-segments][Track segments]]
     - [[#track-inserts][Track inserts]]
-  - [[#transmitter-setup][Transmitter setup]]
-  - [[#wiring][Wiring]]
 
 ** Introduction
 
-This is a variant of my [[https://github.com/bwachter/arctic_tinyrider][Arctic Tinyrider controller firmware]] for the [[https://www.thingiverse.com/thing:2789361][NoTankS tank]]. For this variant I've moved to the [[https://store.arduino.cc/products/arduino-nano-every][Arduino Nano Every]] - mainly for the additional UARTs. This is mainly useful for debugging - the RX pin is no longer shared between the iBus receiver and USB serial. Compiling it for a traditional should require only small changes.
+This repository contains details of my build of the [[https://www.thingiverse.com/thing:2789361][NoTankS tank]]. The firmware now supports multiple models at compile time, and moved [[https://github.com/aard-fi/rcfw][here]].
 
-*** Working features
-
-- ignition switch: throttle is pinned to zero unless ignition switch is on. This allows somewhat safer handling when not fully switched off. A LED connected to D13 will signal throttle state by blinking (off) or solid light (on).
-- throttle (obviously)
-- turning based on accelerating or decelerating one side, depending on the current speed. This also allows turning at zero speed
-- reversing
-- curves for low speed cutoff to keep the motors cooler
-
-*** Planned features
-
-- optimising the steering to result in as little speed change as possible
-
-*** Required hardware
-
-- one Arduino Nano Every
-- one Flysky receiver - I recommend the FS-A8S
-- one Flysky radio, or any other radio capable of speaking AFHDS 2a
-- two ESCs with reverse which use the first PWM input value to configure the zero position. It also should be configurable for forward/reverse - most come in forward/reverse/brake configuration, and not all allow omitting the brake. I'm using the 160A variant from [[https://www.aliexpress.com/item/1005006256842555.html][here]].
-
-The main drawback of the FS-A8S is the lack of a second iBus - so we can't send custom telemetry data back to the radio. On the plus side it is a tiny receiver, very cheap (roughly 10 EUR), and can output up to 18 channels via iBus. I'm not aware of receivers of a similar size with more than one iBus - other small Flysky receivers just have more connectors for PWM breakout cables, which we don't need as we're controlling that part via the Arduino.
+This repository now only contains modified 3D printed parts, for the electronic documentation check the firmware repository.
 
 ** Modified parts
 
@@ -43,34 +19,3 @@ The main drawback of the FS-A8S is the lack of a second iBus - so we can't send 
 *** Track inserts
 
 =track_insert.scad= adds matching track inserts. Print a few and adjust tolerances - to fill all track segments completely you'll need 328 inserts. You don't want to be stuck with a mountain of hard to insert ones.
-
-** Transmitter setup
-
-To use all features your transmitter should have the channels configured like this:
-
-1. right stick, left/right
-2. right stick, up/down
-3. left stick, up/down (range changes based on throttle curve)
-4. left stick, left/right
-5. left dial VRA
-6. right dial VRB
-7. SWA
-8. SWB
-9. SWC
-10. SWD
-
-VRA/VRB are configured on channels 5/6 per default in 'aux channel setup', while the switches are not assigned.
-
-Note that both throttle curve and trim settings will mess with the values sent by the transmitter - and probably should all be disabled.
-
-** Wiring
-
-You'll need one power and one ground bar to connect everything to. A quick and dirty variant is getting ready made jumper wires, cut them and then twist end solder the ends together. I recommend using the power from one ESC for the Arduino and receiver, and keeping the other one available for adding a raspberry pi.
-
-The three-pin connector from the left ESC connects to power bar, ground bar, and pin D3 on the Arduino.
-
-The three-pin connector from the right ESC connects to a dangling power bar, ground bar, and pin D4 on the Arduino.
-
-Depending on your receiver you may have dedicated VCC/ground connectors, if not just connect power and ground from any channel to power/ground bars. Connect the iBus pin to the RX pin on the Arduino. Note that when flashing via USB this pin must be disconnected while flashing.
-
-On the Arduino connect ground and VIN to ground/power bars via a diode. Without a diode the ESC might try to pull power for the motor via the Arduino if not everything is powered up, and the Arduino really doesn't like that.
