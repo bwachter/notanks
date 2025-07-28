@@ -3,6 +3,7 @@
   - [[#modified-parts][Modified parts]]
     - [[#track-segments][Track segments]]
     - [[#track-inserts][Track inserts]]
+    - [[#covers][Covers]]
 
 ** Introduction
 
@@ -19,3 +20,11 @@ This repository now only contains modified 3D printed parts, for the electronic 
 *** Track inserts
 
 =track_insert.scad= adds matching track inserts. Print a few and adjust tolerances - to fill all track segments completely you'll need 328 inserts. You don't want to be stuck with a mountain of hard to insert ones.
+
+*** Covers
+
+The cover segments were built from scratch, but fit into an existing tank frame. A M6 locking nut can be inserted via a nut catch from the side - this reduces the chance of nuts flying out during disassembly, and also makes it easier to glue it in place with a dab of hot glue. Both segments also contain two holes for 5mm LEDs.
+
+=front_cover.scad= scad is a front cover offering a bit more space inside. Openings for ventilation and the ESC switches are configurable.
+
+=back_cover.scad= is a back cover offering more space, mating with the above front cover.

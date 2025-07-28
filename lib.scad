@@ -1,6 +1,6 @@
 inner_cylinder=6.3;
 outer_cylinder=23;
-nut_mount_width=20;
+nut_mount_width=14;
 width=150;
 thickness=5;
 nut_offset=12;
@@ -38,13 +38,27 @@ module main_rod(){
     }
     cylinder(h=width, r=inner_cylinder/2);
     // led cutouts
-    translate([-20,0,nut_offset+25])
+    translate([-20,0,nut_offset+20])
       rotate([0,90,0])
       cylinder(r=2.5, h=50);
 
-    translate([-20,0,width-nut_offset-25])
+    translate([-20,0,width-nut_offset-20])
       rotate([0,90,0])
       cylinder(r=2.5, h=50);
+  }
+}
+
+module switch_cutout(width=8, length=10, depth){
+  cube([width, length, depth]);
+}
+
+module vent(height, width, depth){
+  linear_extrude(depth){
+    circle(r=width/2);
+    translate([0, width/-2])
+      square([height-width, width]);
+    translate([height-width, 0])
+      circle(r=width/2);
   }
 }
 
